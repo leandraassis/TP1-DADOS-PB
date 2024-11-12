@@ -15,20 +15,29 @@ def eNumero(numero):
     return numero.isdigit()
 
 def verificarIdTarefa(tarefaLista, id):
-    """Verifica se um ID existe na lista de tarefas"""
+    """Verifica se um ID existe na lista de tarefas
+        
+        parametro:
+        tarefaLista (list)
+        id (int)
+    """
     for tarefa in tarefaLista:
         if (tarefa['id'] == id):
             return tarefa
     return None
 
 def adicionarTarefa(tarefaLista):
-    """Adiciona uma nova tarefa a lista"""
+    """Adiciona uma nova tarefa a lista
+        
+        parametro:
+        tarefaLista (list)
+    """
     idDigitado = input("Digite o id da tarefa: ")
     if (eNumero(idDigitado)):
         id = int(idDigitado)
         tarefaPresente = verificarIdTarefa(tarefaLista, id)
 
-        if tarefaPresente:
+        if (tarefaPresente):
             print("Uma tarefa com esse id já existe.")
         else:
             nome = input("Nomee a tarefa: ")
@@ -50,7 +59,11 @@ def adicionarTarefa(tarefaLista):
         print("ID precisa ser um número.")
 
 def listarTarefas(tarefaLista):
-    """Lista todas as tarefas"""
+    """Lista todas as tarefas
+        
+        parametro:
+        tarefaLista (list)
+    """
     if (len(tarefaLista) == 0):
         print("Não há tarefas para exibir.")
     else:
@@ -63,7 +76,14 @@ def listarTarefas(tarefaLista):
             print("-" * 40)
 
 def tarefasEmAberto(tarefaLista):
-    """Filtra as tarefas para pegar as em aberto (status 'A fazer')"""
+    """Filtra as tarefas pra pegar as em aberto (status 'A fazer')
+        
+        parametro:
+        tarefaLista (list)
+
+        Retorno:
+        list - a lista com apenas as tarefas em aberto
+    """
     tarefasAbertas = []
     for tarefa in tarefaLista:
         if (tarefa['status'] == "A fazer"):
@@ -71,12 +91,14 @@ def tarefasEmAberto(tarefaLista):
     return tarefasAbertas
 
 def concluirTarefa(tarefaLista, id):
-    """Conclui uma tarefa (muda seu status pra 'Concluída')"""
+    """Conclui uma tarefa de uma lista (muda seu status pra 'Concluída')
+        
+        parametro:
+        tarefaLista (list)
+        id (int)
+    """
     tarefasAbertas = tarefasEmAberto(tarefaLista)
-
-    print("TAREFAS EM ABERTO:\n")
-    listarTarefas(tarefasAbertas)
-
+    
     tarefaPresente = verificarIdTarefa(tarefasAbertas, id)
     if (tarefaPresente):
         os.system('cls')
@@ -84,10 +106,17 @@ def concluirTarefa(tarefaLista, id):
         tarefaPresente['status'] = 'Concluída'
         print("Status da tarefa alterado para 'Concluída'.")
     else:
-        print("Essa tarefa não existe ou não está em aberto. Verifique o ID.")
+        print("Essa tarefa não existe ou não está em aberto. Verifique o ID e a lista abaixo antes de tentar novamente.\n")
+        print("TAREFAS EM ABERTO:\n")
+        listarTarefas(tarefasAbertas)
 
 def removerTarefa(tarefaLista, id):
-    """Remove uma tarefa pela ID"""
+    """Remove uma tarefa de uma lista por seu ID
+    
+        parametro:
+        tarefaLista (list)
+        id (int)
+    """
     tarefaPresente = verificarIdTarefa(tarefaLista, id)
     if (tarefaPresente):
         tarefaLista.remove(tarefaPresente)
@@ -99,7 +128,7 @@ def mostrarMenu():
     """Exibe o menu e processa a escolha do usuário"""
     print("BEM VINDO(A) A SEU GERENCIADOR DE TAREFAS!")
     while(True):
-        escolhaUser = int(input("\n1 -- Listar tarefas\n2 -- Adicionar tarefa\n3 -- Concluir tarefa\n4 - Remover tarefa\n5 -- SAIR\n"))
+        escolhaUser = int(input("\n1 -- Listar tarefas\n2 -- Adicionar tarefa\n3 -- Concluir tarefa\n4 -- Remover tarefa\n5 -- SAIR\n"))
 
         match escolhaUser:
             case 1:
